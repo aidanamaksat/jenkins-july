@@ -27,10 +27,16 @@ variable "source_ami_filter" {
   default = "amzn2-ami-hvm-*-gp2"
 }
 
+variable "jenkins_build_number" {
+  type    = string
+  default = ""
+}
+
 variable "instance_type" {
   type    = string
   default = "t2.micro"
 }
+
 
 source "amazon-ebs" "example" {
   access_key    = var.aws_access_key
@@ -38,7 +44,7 @@ source "amazon-ebs" "example" {
   region        = var.aws_region
   instance_type = var.instance_type
   ssh_username  = "ec2-user"
-  ami_name = "my-ami"
+  ami_name = "my-ami-${var.jenkins_build_number}"
 
   source_ami_filter {
     filters = {
